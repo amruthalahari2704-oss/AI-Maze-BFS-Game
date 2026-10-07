@@ -6,7 +6,7 @@ The player must reach the goal while an AI robot continuously searches for and f
 
 ## 🚀 Live Demo
 
-🔗 
+🔗  https://amruthalahari2704-oss.github.io/AI-Maze-BFS-Game/
 
 ## 📌 Project Overview
 
