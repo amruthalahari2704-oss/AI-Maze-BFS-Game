@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Maze Escape - BFS</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="top-header">
+
+        <div class="brand">
+            <div class="brand-icon">🧠</div>
+
+            <div>
+                <h1>AI MAZE ESCAPE</h1>
+                <p>Breadth First Search • AI Game</p>
+            </div>
+        </div>
+
+        <div class="algorithm-badge">
+            <span>ALGORITHM</span>
+            <strong>BFS</strong>
+        </div>
+
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="game-container">
+
+        <!-- ================= LEFT SIDE ================= -->
+
+        <section class="game-section">
+
+            <!-- GAME STATUS -->
+
+            <div class="status-bar">
+
+                <div class="status-item">
+                    <span class="status-label">TIME</span>
+                    <strong id="timer">30</strong>
+                    <small>SEC</small>
+                </div>
+
+                <div class="status-item">
+                    <span class="status-label">PLAYER STEPS</span>
+                    <strong id="playerSteps">0</strong>
+                </div>
+
+                <div class="status-item">
+                    <span class="status-label">AI STEPS</span>
+                    <strong id="aiSteps">0</strong>
+                </div>
+
+                <div class="status-item">
+                    <span class="status-label">NODES EXPLORED</span>
+                    <strong id="nodesExplored">0</strong>
+                </div>
+
+            </div>
+
+
+            <!-- AI STATUS -->
+
+            <div class="ai-status" id="aiStatus">
+
+                <div class="ai-dot"></div>
+
+                <div>
+                    <strong id="aiStatusTitle">AI READY</strong>
+                    <span id="aiStatusText">
+                        Press START GAME to begin
+                    </span>
+                </div>
+
+            </div>
+
+
+            <!-- MAZE -->
+
+            <div class="maze-wrapper">
+
+                <div id="maze" class="maze"></div>
+
+            </div>
+
+
+            <!-- CONTROLS -->
+
+            <div class="controls">
+
+                <button id="startBtn" class="primary-btn">
+                    ▶ START GAME
+                </button>
+
+                <button id="restartBtn" class="secondary-btn">
+                    ↻ RESTART
+                </button>
+
+            </div>
+
+
+            <!-- KEYBOARD INFO -->
+<!-- KEYBOARD CONTROLS -->
+
+<div class="keyboard-info">
+
+    <span>Move using keyboard:</span>
+
+    <div class="key">↑</div>
+    <div class="key">↓</div>
+    <div class="key">←</div>
+    <div class="key">→</div>
+
+    <span class="or">or</span>
+
+    <div class="key">W</div>
+    <div class="key">A</div>
+    <div class="key">S</div>
+    <div class="key">D</div>
+
+</div>
+
+
+<!-- ON-SCREEN CONTROLS -->
+
+<div class="game-controls">
+
+    <button class="move-btn up" data-move="up">⬆️</button>
+
+    <div class="horizontal-controls">
+
+        <button class="move-btn" data-move="left">⬅️</button>
+
+        <button class="move-btn" data-move="down">⬇️</button>
+
+        <button class="move-btn" data-move="right">➡️</button>
+
+    </div>
+
+</div>
+
+        </section>
+
+
+        <!-- ================= RIGHT SIDE ================= -->
+
+        <aside class="sidebar">
+
+            <!-- OBJECTIVE -->
+
+            <div class="card objective-card">
+
+                <div class="card-title">
+                    <span>🎯</span>
+                    <h2>MISSION</h2>
+                </div>
+
+                <p>
+                    Reach the <strong class="green-text">GREEN GOAL</strong>
+                    before the AI catches you.
+                </p>
+
+                <div class="mission-list">
+
+                    <div>
+                        <span class="legend-player"></span>
+                        <span>You</span>
+                    </div>
+
+                    <div>
+                        <span class="legend-ai"></span>
+                        <span>AI Enemy</span>
+                    </div>
+
+                    <div>
+                        <span class="legend-goal"></span>
+                        <span>Goal</span>
+                    </div>
+
+                    <div>
+                        <span class="legend-wall"></span>
+                        <span>Wall</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- BFS EXPLANATION -->
+
+            <div class="card">
+
+                <div class="card-title">
+                    <span>🧠</span>
+                    <h2>HOW AI THINKS</h2>
+                </div>
+
+                <div class="step">
+
+                    <span class="step-number">1</span>
+
+                    <div>
+                        <strong>Start</strong>
+                        <p>AI starts from its current position.</p>
+                    </div>
+
+                </div>
+
+
+                <div class="step">
+
+                    <span class="step-number">2</span>
+
+                    <div>
+                        <strong>Explore</strong>
+                        <p>
+                            BFS explores nearby cells
+                            level by level.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="step">
+
+                    <span class="step-number">3</span>
+
+                    <div>
+                        <strong>Find Player</strong>
+                        <p>
+                            AI searches until it reaches
+                            the player's position.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="step">
+
+                    <span class="step-number">4</span>
+
+                    <div>
+                        <strong>Chase</strong>
+                        <p>
+                            AI follows the shortest path
+                            toward the player.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ALGORITHM INFO -->
+
+            <div class="card algorithm-card">
+
+                <div class="card-title">
+                    <span>⚡</span>
+                    <h2>ALGORITHM</h2>
+                </div>
+
+                <div class="algorithm-name">
+                    Breadth First Search
+                </div>
+
+                <p>
+                    BFS uses a <strong>Queue</strong> and explores
+                    nodes level-by-level. In an unweighted maze,
+                    it can find the shortest path between two cells.
+                </p>
+
+            </div>
+
+
+            <div class="footer-note">
+                AI Assignment • Artificial Intelligence
+            </div>
+
+        </aside>
+
+    </main>
+
+
+    <!-- ================= START SCREEN ================= -->
+
+    <div class="overlay" id="startOverlay">
+
+        <div class="modal">
+
+            <div class="modal-icon">🧠</div>
+
+            <h2>AI MAZE ESCAPE</h2>
+
+            <p class="modal-subtitle">
+                Can you escape the AI?
+            </p>
+
+            <div class="instructions">
+
+                <div>
+                    <span>🧑</span>
+                    <p>Control the blue player using Arrow Keys or WASD.</p>
+                </div>
+
+                <div>
+                    <span>🤖</span>
+                    <p>The AI uses BFS to chase you.</p>
+                </div>
+
+                <div>
+                    <span>⏱️</span>
+                    <p>You have 30 seconds to reach the goal.</p>
+                </div>
+
+            </div>
+
+            <button id="modalStartBtn" class="primary-btn large-btn">
+                ▶ START GAME
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= GAME OVER ================= -->
+
+    <div class="overlay hidden" id="gameOverlay">
+
+        <div class="modal">
+
+            <div class="result-icon" id="resultIcon">
+                🏆
+            </div>
+
+            <h2 id="resultTitle">
+                YOU WIN!
+            </h2>
+
+            <p id="resultMessage">
+                You escaped the AI.
+            </p>
+
+            <div class="result-stats">
+
+                <div>
+                    <span>TIME</span>
+                    <strong id="finalTime">0</strong>
+                </div>
+
+                <div>
+                    <span>PLAYER STEPS</span>
+                    <strong id="finalPlayerSteps">0</strong>
+                </div>
+
+                <div>
+                    <span>AI STEPS</span>
+                    <strong id="finalAiSteps">0</strong>
+                </div>
+
+            </div>
+
+            <button id="playAgainBtn" class="primary-btn large-btn">
+                ↻ PLAY AGAIN
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
